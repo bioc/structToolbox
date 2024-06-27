@@ -58,8 +58,8 @@ Pinheiro JC, Bates DM (2000). \emph{Mixed-Effects Models in S and S-PLUS}.
 Springer, New York. doi:10.1007/b98882
 \url{https://doi.org/10.1007/b98882}.
 
-Lenth R (2023). \emph{emmeans: Estimated Marginal Means, aka Least-Squares
-Means}. R package version 1.9.0,
+Lenth R (2024). \emph{emmeans: Estimated Marginal Means, aka Least-Squares
+Means}. R package version 1.10.1,
 \url{https://CRAN.R-project.org/package=emmeans}.
 
 Fox J, Weisberg S (2019). \emph{An R Companion to Applied Regression}, Third

@@ -71,10 +71,9 @@ M = sb_corr(
 M = sb_corr(order_col='run_order',batch_col='batch_no',qc_col='class')
 }
 \references{
-Jankevics A, Lloyd GR, Weber RJM (2023). \emph{pmp: Peak Matrix Processing
-and signal batch correction for metabolomics datasets}.
-doi:10.18129/B9.bioc.pmp \url{https://doi.org/10.18129/B9.bioc.pmp}, R
-package version 1.14.0, \url{https://bioconductor.org/packages/pmp}.
+Jankevics A, Lloyd GR, Weber RJM (????). \emph{pmp: Peak Matrix Processing
+and signal batch correction for metabolomics datasets}. R package
+version 1.15.1.
 
 Kirwan JA, Broadhurst DI, Davidson RL, Viant MR (2013). "Characterising
 and correcting batch variation in an automated direct infusion mass

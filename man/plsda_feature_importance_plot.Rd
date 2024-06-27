@@ -56,7 +56,7 @@ Wickham H (2007). "Reshaping Data with the reshape Package." \emph{Journal
 of Statistical Software}, \emph{21}(12), 1-20.
 \url{http://www.jstatsoft.org/v21/i12/}.
 
-Wilke C (2023). \emph{cowplot: Streamlined Plot Theme and Plot Annotations
-for 'ggplot2'}. R package version 1.1.2,
+Wilke C (2024). \emph{cowplot: Streamlined Plot Theme and Plot Annotations
+for 'ggplot2'}. R package version 1.1.3,
 \url{https://CRAN.R-project.org/package=cowplot}.
 }

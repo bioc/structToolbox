@@ -47,8 +47,8 @@ M = model_apply(M,D)
 
 }
 \references{
-Lenth R (2023). \emph{emmeans: Estimated Marginal Means, aka Least-Squares
-Means}. R package version 1.9.0,
+Lenth R (2024). \emph{emmeans: Estimated Marginal Means, aka Least-Squares
+Means}. R package version 1.10.1,
 \url{https://CRAN.R-project.org/package=emmeans}.
 
 Pinheiro J, Bates D, R Core Team (2023). \emph{nlme: Linear and Nonlinear
