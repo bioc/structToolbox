@@ -1,3 +1,7 @@
+Changes 1.15.2
++ fix ANOVA type 1
++ add control_group param to ttest
+
 Changes 1.13.5
 + improve consistency between methods in fold change computations
 + better handling of NA in fold change computations
