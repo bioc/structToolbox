@@ -2,10 +2,11 @@
 #'
 #' This package extends the classes defined in the struct package
 #'
-#' @docType package
-#' @name structToolbox
 #' @import struct
 #' @import methods
 #' @import stats
+#' @keywords internal 
+"_PACKAGE"
+
 NULL
-## NULL
+
