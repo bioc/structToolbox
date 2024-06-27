@@ -1,14 +1,39 @@
 # testanova class
-test_that('anova 1way',{
+test_that('anova 1way TYPE 1',{
   # DatasetExperiment
   D=iris_DatasetExperiment()
   # method
-  ME=ANOVA(formula=y~Species)
+  ME=ANOVA(formula=y~Species,ss_type = 'I')
   ME=model_apply(ME,D)
   # expect all true
   expect_true(all(ME$significant[,1]))
 
 })
+
+# testanova class
+test_that('anova 1way type 2',{
+    # DatasetExperiment
+    D=iris_DatasetExperiment()
+    # method
+    ME=ANOVA(formula=y~Species,ss_type='II')
+    ME=model_apply(ME,D)
+    # expect all true
+    expect_true(all(ME$significant[,1]))
+    
+})
+
+# testanova class
+test_that('anova 1way type 3',{
+    # DatasetExperiment
+    D=iris_DatasetExperiment()
+    # method
+    ME=ANOVA(formula=y~Species,ss_type='III')
+    ME=model_apply(ME,D)
+    # expect all true
+    expect_true(all(ME$significant[,1]))
+    
+})
+
 
 test_that('anova 2way',{
   set.seed('57475')
