@@ -11,6 +11,33 @@ test_that('ttest',{
   expect_equal(M[2]$t_statistic[1,1],-15.386,tolerance=0.0005)
 })
 
+
+
+test_that('ttest control group',{
+    set.seed('57475')
+    # DatasetExperiment
+    D=iris_DatasetExperiment()
+    # need two groups for ttest
+    M = filter_smeta(mode='exclude',levels='versicolor',factor_name='Species')
+    M = model_apply(M,D)
+    D = predicted(M)
+
+    T0 = ttest(factor_names='Species',control_group = NULL)
+    T1 = ttest(factor_names='Species',control_group = 'setosa')
+    T2 = ttest(factor_names='Species',control_group = 'virginica')
+    
+    T0 = model_apply(T0,D)
+    T1 = model_apply(T1,D)
+    T2 = model_apply(T2,D)
+    
+    # setosa is first level by default so NULL and setosa should give same t-stats
+    expect_equal(T0$t_statistic,T1$t_statistic)
+    # virginica as control group should give -ve t-stat
+    expect_equal(T0$t_statistic,-T2$t_statistic)
+    
+})
+
+
 test_that('paired-ttest',{
   set.seed('57475')
   # DatasetExperiment

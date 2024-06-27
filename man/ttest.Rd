@@ -12,6 +12,7 @@ ttest(
   paired_factor = character(0),
   equal_variance = FALSE,
   conf_level = 0.95,
+  control_group = NULL,
   ...
 )
 }
@@ -29,6 +30,8 @@ ttest(
 \item{equal_variance}{(logical) Equal variance. Allowed values are limited to the following: \itemize{ \item{\code{"TRUE"}: The variance of each group is treated as being equal using the pooled variance to estimate the variance.}\item{\code{"FALSE"}: The variance of each group is not assumed to be equal and the Welch (or Satterthwaite) approximation is used.}} The default is \code{FALSE}.\cr}
 
 \item{conf_level}{(numeric) The confidence level of the interval. The default is \code{0.95}.\cr}
+
+\item{control_group}{(character, NULL) The level name of the group used as the second group (where possible) when computing t-statistics. This ensures a positive t-statistic corresponds to an increase when compared to the control group. The default is \code{NULL}.}
 
 \item{...}{Additional slots and values passed to \code{struct_class}.}
 }
@@ -60,7 +63,8 @@ M = ttest(
       paired = FALSE,
       paired_factor = "NA",
       equal_variance = FALSE,
-      conf_level = 0.95)
+      conf_level = 0.95,
+      control_group = NULL)
 
 M = ttest(factor_name='Class')
 
