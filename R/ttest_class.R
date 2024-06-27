@@ -11,6 +11,7 @@ ttest = function(
     paired_factor=character(0),
     equal_variance=FALSE,
     conf_level=0.95,
+    control_group = NULL,
     ...) {
     out=struct::new_struct('ttest',
         alpha=alpha,
@@ -20,6 +21,7 @@ ttest = function(
         paired_factor=paired_factor,
         equal_variance=equal_variance,
         conf_level=conf_level,
+        control_group = control_group,
         ...)
     return(out)
 }
@@ -37,6 +39,7 @@ ttest = function(
         paired_factor='entity',
         equal_variance='entity',
         conf_level='entity',
+        control_group = 'entity',
         # OUTPUTS
         t_statistic='entity',
         p_value='entity',
@@ -52,8 +55,10 @@ ttest = function(
         type="univariate",
         predicted='p_value',
         ontology="STATO:0000304",
-        .params=c('alpha','mtc','factor_names','paired','paired_factor','equal_variance','conf_level'),
-        .outputs=c('t_statistic','p_value','dof','significant','conf_int','estimates'),
+        .params=c('alpha','mtc','factor_names','paired','paired_factor',
+                  'equal_variance','conf_level','control_group'),
+        .outputs=c('t_statistic','p_value','dof','significant','conf_int',
+                   'estimates'),
 
         factor_names=ents$factor_names,
 
@@ -81,6 +86,17 @@ ttest = function(
             value = FALSE,
             type = 'logical',
             max_length = 1
+        ),
+        control_group=entity(
+            name='Control group',
+            description = paste0('The level name of the group used as ',
+                'the second group (where possible) when computing t-statistics. ',
+                'This ensures a positive t-statistic corresponds to an increase ',
+                'when compared to the control group.'
+            ),
+            type=c('character','NULL'),
+            max_length = 1,
+            value=NULL
         ),
         
         t_statistic=entity(name='t-statistic',
@@ -137,6 +153,11 @@ setMethod(f="model_apply",
             y=factor(y)
         }
         
+        # put control group first if requested
+        if (!is.null(M$control_group)) {
+            y = relevel(y,M$control_group)
+        }
+        
         L=levels(y)
         if (length(L)!=2) {
             stop('must have exactly two levels for this implementation of t-statistic')
@@ -158,9 +179,9 @@ setMethod(f="model_apply",
                 # check for pairs if required
                 if (M$paired) {
                     # get group A
-                    dfA=data.frame(val=x[y==L[1]],id=D$sample_meta[y==L[1],M$paired_factor])
+                    dfA=data.frame(val=x[y==L[2]],id=D$sample_meta[y==L[2],M$paired_factor])
                     # get group B
-                    dfB=data.frame(val=x[y==L[2]],id=D$sample_meta[y==L[2],M$paired_factor])
+                    dfB=data.frame(val=x[y==L[1]],id=D$sample_meta[y==L[1],M$paired_factor])
                     # merge
                     Z = merge(dfA,dfB,by='id') # will exclude any sample without a matching pair in sample list
                     # omit pairs with an NA
@@ -175,8 +196,8 @@ setMethod(f="model_apply",
                     A = Z$val.x
                     B = Z$val.y
                 } else {
-                    A = x[y==L[1]]
-                    B = x[y==L[2]]
+                    A = x[y==L[2]]
+                    B = x[y==L[1]]
                 }
                 
                 g=unlist(
@@ -214,7 +235,7 @@ setMethod(f="model_apply",
         temp=data.frame(row.names=CN) # make sure we get  result for all features, even if NA
         output=merge(temp,as.data.frame(t(output),stringsAsFactors = FALSE),by=0,all=TRUE,sort=FALSE)
         rownames(output)=output$Row.names
-        output=output[,-1]
+        output=output[,-1,drop=FALSE]
         # ensure outputs are in the correct order (TODO: update to data.frame with rownames)
         output=output[CN,]
         output$p.value='p_value'=p.adjust(output$p.value,method = param_value(M,'mtc'))
