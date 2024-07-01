@@ -199,7 +199,7 @@ setMethod(f="model_apply",
         
         counter=1
         
-        D$sample_meta[[M$factor_name]]=ordered(D$sample_meta[[M$factor_name]])
+        D$sample_meta[[M$factor_name]]=factor(D$sample_meta[[M$factor_name]])
         
         # for all pairs of groups
         for (A in 1:(length(L)-1)) {
@@ -209,12 +209,28 @@ setMethod(f="model_apply",
                 FG=filter_smeta(factor_name=M$factor_name,mode='include',levels=L[c(A,B)])
                 FG=model_apply(FG,D)
                 # change to ordered factor so that we make use of control group
-                FG$filtered$sample_meta[[M$factor_name]]=ordered(FG$filtered$sample_meta[[M$factor_name]],levels=L[c(A,B)])
+                #FG$filtered$sample_meta[[M$factor_name]]=ordered(FG$filtered$sample_meta[[M$factor_name]],levels=L[c(A,B)])
                 
                 if (M$method=='geometric') {
                     
+                    control_group = NULL
+                    if (length(M$control_group)>0) {
+                        if (L[B] == M$control_group) {
+                            control_group = M$control_group
+                            
+                        }
+                    }
+
                     # apply t-test
-                    TT=ttest(alpha=0.05,mtc='none',factor_names=M$factor_name,paired=M$paired,paired_factor=M$sample_name,conf_level=M$conf_level)
+                    TT=ttest(
+                        alpha=0.05,
+                        mtc='none',
+                        factor_names=M$factor_name,
+                        paired=M$paired,
+                        paired_factor=M$sample_name,
+                        conf_level=M$conf_level,
+                        control_group=control_group)
+                    
                     TT=model_apply(TT,predicted(FG))
                     # log2(fold change) is the difference in estimate.mean from ttest
                     if (M$paired) {

@@ -17,7 +17,7 @@ test_that('fold_change',{
   D$data[1:25,3] = NA
   
   # unpaired
-  FF = fold_change(factor_name='Species',method="geometric")
+  FF = fold_change(factor_name='Species',method="geometric",control_group='versicolor')
   FF = model_apply(FF,D)
   m=exp(mean(log(D$data[D$sample_meta$Species=='virginica',1]))) / exp(mean(log((D$data[D$sample_meta$Species=='versicolor',1]))))
   expect_equal(FF$fold_change[1,1],m,tolerance=0.00001)

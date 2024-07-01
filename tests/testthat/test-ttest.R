@@ -8,7 +8,7 @@ test_that('ttest',{
     ttest(factor_names='Species')
   # apply
   M = model_apply(M,D)
-  expect_equal(M[2]$t_statistic[1,1],-15.386,tolerance=0.0005)
+  expect_equal(M[2]$t_statistic[1,1],15.386,tolerance=0.0005)
 })
 
 
@@ -68,11 +68,11 @@ test_that('paired-ttest',{
   
   # 50 pairs - 1 without pair - 1 with an NA - 1 for ttest
   expect_equal(M$dof[1],47) 
-  expect_equal(M$t_statistic[1,1],-5.195,tolerance=0.0005)
+  expect_equal(M$t_statistic[1,1],5.195,tolerance=0.0005)
   
   # 50 pairs - 1 without pair - 1 for ttest
   expect_equal(M$dof[2],48) 
-  expect_equal(M$t_statistic[2,1],-3.014,tolerance=0.0005)
+  expect_equal(M$t_statistic[2,1],3.014,tolerance=0.0005)
   
   # check order dependence
   expect_equal(M$t_statistic[1,1],M2$t_statistic[1,1],tolerance=0.00005)
